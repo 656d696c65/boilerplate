@@ -1,0 +1,11 @@
+{
+    "name": "boilerplate",
+    "private": true,
+    "scripts": {
+        "dev": "pnpm --recursive --if-present --parallel --filter='./packages/**' run dev",
+        "build": "pnpm --recursive --if-present --filter='./packages/**' run build"
+    },
+    "workspaces": [
+        "./packages/*"
+    ]
+}

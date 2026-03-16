@@ -1,0 +1,39 @@
+# ==============================================================================
+# Dockerfile.check-node.dockerignore
+# ==============================================================================
+# Filters the Docker build context for the Node.js check Dockerfile.
+# Build context is the repo root (.). Excludes untracked/generated files.
+# ==============================================================================
+
+# Version control
+.git
+
+# IDE / editor
+.vscode
+.continue
+.old
+
+# Node.js
+**/node_modules
+**/.pnpm-store
+**/.cache
+**/.npmrc
+**/pnpm-lock.yaml
+**/*.tsbuildinfo
+**/styled-system
+
+# Python
+**/__pycache__
+**/*.pyc
+**/.venv
+**/*.egg-info
+
+# Build artifacts
+**/build
+**/dist
+
+# Environment files
+application/.env
+
+# Test caches
+**/.pytest_cache

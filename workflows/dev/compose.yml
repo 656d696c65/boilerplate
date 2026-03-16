@@ -1,0 +1,100 @@
+
+x-config:
+  # PostgreSQL
+  postgres-user: &pg-user postgres
+  postgres-password: &pg-password admin
+  postgres-db: &pg-db default
+  postgres-url: &pg-url postgresql://postgres:admin@boilerplate-postgres:5432/default
+
+
+services:
+  # ============================================================================
+  # Infrastructure Services
+  # ============================================================================
+
+  # PostgreSQL - Relational database for application data
+  boilerplate-postgres:
+    container_name: boilerplate-postgres
+    image: postgres:18.3
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: *pg-user
+      POSTGRES_PASSWORD: *pg-password
+      POSTGRES_DB: *pg-db
+    ports:
+      - "19000:5432"  # Host access for DB clients (DBeaver, pgAdmin, etc.)
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d default"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ============================================================================
+  # Application Services
+  # ============================================================================
+
+  # API - Backend service (Hono framework on Node.js)
+  boilerplate-api:
+    container_name: boilerplate-api
+    image: boilerplate-api
+    build:
+      context: ../../application
+      dockerfile: ../workflows/dev/api/Dockerfile
+      args:
+        NODE_VERSION: "22.16.0"
+        PNPM_VERSION: "10.12.1"
+    environment:
+      # App
+      ENV: development
+      VERBOSE: "true"
+      PORT: "3000"
+      # Auth
+      CORS_ORIGIN: http://localhost:19003
+      COOKIES_DOMAIN: localhost
+      COOKIES_KEY: boilerplate-dev-secret-key-change-in-production
+      # URLs
+      API_BASE_URL: http://api:3000
+      WEBSITE_BASE_URL: http://localhost:19003
+      # Database
+      SQL_DATABASE_URL: *pg-url
+      # Tools (used by migrate/seed scripts)
+      NODE_ENV: development
+    ports:
+      - "19002:3000"
+    volumes:
+      # Full application package - bind-mounted from host (including node_modules)
+      - ../..:/workspace:cached
+      # Dev scripts (entrypoint, migrate, seed, start) — mounted outside /workspace
+      # to avoid creating an application/dev/ directory on the host
+      - .:/dev-scripts:cached
+    depends_on:
+      boilerplate-postgres:
+        condition: service_healthy
+
+  # Website - Frontend interface (React + Vite)
+  boilerplate-website:
+    container_name: boilerplate-website
+    image: boilerplate-website
+    build:
+      context: ../..
+      dockerfile: workflows/dev/website/Dockerfile
+      args:
+        NODE_VERSION: "22.16.0"
+        PNPM_VERSION: "10.12.1"
+    environment:
+      VITE_API_BASE_URL: http://localhost:19002
+      VITE_WEBSITE_BASE_URL: http://localhost:19003
+    ports:
+      - "19003:5174"
+    volumes:
+      # Full application package - bind-mounted from host (including node_modules)
+      - ../..:/workspace:cached
+
+# ==============================================================================
+# Named Volumes
+# ==============================================================================
+volumes:
+  # Persistent infrastructure data - survives container restarts
+  postgres_data:
