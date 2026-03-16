@@ -1,39 +1,33 @@
 {
-  "name": "@boilerplate/metadata",
-  "type": "module",
-  "private": true,
-  "scripts": {
-    "build": "tsc --build"
-  },
-  "devDependencies": {
-    "@types/node": "25.0.3",
-    "typescript": "5.9.3"
-  },
-  "dependencies": {
-    "drizzle-orm": "0.45.1",
-    "nanoid": "5.1.6",
-    "postgres": "3.4.7",
-    "valibot": "1.2.0"
-  },
-  "files": [
-    "./build"
-  ],
-  "exports": {
-    "./orm": {
-      "default": "./build/orm.index.js",
-      "types": "./build/orm.index.d.ts"
+    "name": "@boilerplate/metadata",
+    "type": "module",
+    "private": true,
+    "scripts": {
+        "build": "tsc --build",
+        "typecheck": "tsc --noEmit"
     },
-    "./routes": {
-      "default": "./build/routes.index.js",
-      "types": "./build/routes.index.d.ts"
+    "devDependencies": {
+        "@types/node": "25.5.0",
+        "typescript": "5.9.3"
     },
-    "./schemas": {
-      "default": "./build/schemas.index.js",
-      "types": "./build/schemas.index.d.ts"
+    "dependencies": {
+        "drizzle-orm": "0.45.1",
+        "nanoid": "5.1.7",
+        "postgres": "3.4.8",
+        "valibot": "1.2.0"
     },
-    "./utilities": {
-      "default": "./build/utilities.index.js",
-      "types": "./build/utilities.index.d.ts"
+    "exports": {
+        "./orm": {
+            "default": "./src/orm/index.ts"
+        },
+        "./routes": {
+            "default": "./src/routes/index.ts"
+        },
+        "./schemas": {
+            "default": "./src/schemas/index.ts"
+        },
+        "./utilities": {
+            "default": "./src/utilities/index.ts"
+        }
     }
-  }
 }

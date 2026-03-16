@@ -6,7 +6,7 @@
 # ==============================================================================
 set -e
 
-SCRIPT_DIR="/dev-scripts/application/packages/api"
+SCRIPT_DIR="/dev-scripts/api"
 
 # Install dependencies (bind-mounted from host, so node_modules persists)
 cd /workspace && pnpm install --frozen-lockfile

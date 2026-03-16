@@ -1,6 +1,5 @@
 import { Outlet } from "@tanstack/react-router"
-import { css } from "../../styled-system/css"
-
+import { css } from "../../styled-system/css/css"
 
 export function RootLayout() {
     return (
@@ -8,19 +7,17 @@ export function RootLayout() {
             className={css({
                 position: "relative",
                 minHeight: "100dvh",
-                height: "100dvh",
-                width: "100dvw",
-                maxWidth: "100dvw",
-                overflowY: "auto",
-                overflowX: "hidden",
+                width: "100%",
+                maxWidth: "100%",
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "start",
                 alignItems: "start",
-                backgroundColor: "white",
+                overflowX: "hidden",
+                overflowY: "auto",
             })}
         >
             <Outlet />
-        </div >
+        </div>
     )
 }

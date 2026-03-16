@@ -59,7 +59,7 @@ export function InputToggle<TValue extends (string | boolean)>(props:
                             className={css({})}
                         >
                             <ButtonGhostContent
-                                className={css.raw(
+                                className={css(
                                     {
                                         animationDuration: "200ms",
                                         animationTimingFunction: "ease-in-out",

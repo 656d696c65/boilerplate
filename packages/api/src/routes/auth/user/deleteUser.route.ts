@@ -1,4 +1,4 @@
-import { userModel, userSessionModel } from "@boilerplate/metadata/orm"
+import { models } from "@boilerplate/metadata/orm"
 import { deleteUserRouteDefinition } from "@boilerplate/metadata/routes"
 import { and, eq } from "drizzle-orm"
 import { checkUserSessionMiddleware } from "../../../middlewares/checkUserSession.middleware.js"
@@ -21,7 +21,7 @@ export const deleteUserRoute = routeHandler({
         await Clients.platformPostgresql.transaction(async (transaction) => {
             await update({
                 database: transaction,
-                table: userModel,
+                table: models.user,
                 data: {
                     isArchived: true,
                     lastUpdatedAt: new Date().toISOString(),
@@ -35,7 +35,7 @@ export const deleteUserRoute = routeHandler({
 
             await update({
                 database: transaction,
-                table: userSessionModel,
+                table: models.userSession,
                 data: {
                     isActive: false,
                     lastUpdatedAt: new Date().toISOString(),

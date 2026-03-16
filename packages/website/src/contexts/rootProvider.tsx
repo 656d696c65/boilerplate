@@ -1,7 +1,7 @@
 import { Fragment } from 'react'
-import { Toaster } from 'sonner'
 import { DataProvider } from './data/dataProvider.js'
 import { RouterProvider } from './router/routerProvider.js'
+import { ToasterProvider } from './toasts/toastProvider.js'
 
 
 export function RootProvider() {
@@ -9,10 +9,7 @@ export function RootProvider() {
         <Fragment>
             <DataProvider>
                 <RouterProvider />
-                <Toaster
-                    position="bottom-right"
-                    expand={true}
-                />
+                <ToasterProvider />
             </DataProvider>
         </Fragment>
     )

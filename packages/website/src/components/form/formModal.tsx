@@ -183,7 +183,7 @@ export function FormModal<
                                         className={css({})}
                                     >
                                         <ButtonOutlineContent
-                                            className={css.raw({})}
+                                            className={css({})}
                                             text={"Cancel"}
                                         />
                                     </button>
@@ -210,7 +210,7 @@ export function FormModal<
                                     >
                                         <ButtonPlainContent
                                             {...props.submitButtonProps}
-                                            className={css.raw({})}
+                                            className={css({})}
                                             isLoading={isSubmitting}
                                         />
                                     </button>

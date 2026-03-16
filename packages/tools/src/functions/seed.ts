@@ -1,4 +1,4 @@
-import { userModel } from '@boilerplate/metadata/orm'
+import { models } from '@boilerplate/metadata/orm'
 import { generateId } from "@boilerplate/metadata/utilities"
 import { pbkdf2Sync, randomBytes } from "crypto"
 import { dbClient } from '../utilities/dbClient.js'
@@ -13,7 +13,7 @@ async function seed() {
             console.log("Add user")
             const passwordSalt = randomBytes(16).toString('hex')
             const passwordHash = pbkdf2Sync("demo", passwordSalt, 128000, 64, `sha512`).toString(`hex`)
-            const newUser: (typeof userModel.$inferInsert) = {
+            const newUser: (typeof models.user.$inferInsert) = {
                 id: generateId(),
                 isArchived: false,
                 isActive: true,
@@ -22,7 +22,7 @@ async function seed() {
                 passwordSalt: passwordSalt,
                 createdAt: new Date().toISOString(),
             }
-            await tx.insert(userModel).values(newUser)
+            await tx.insert(models.user).values(newUser)
 
 
         })

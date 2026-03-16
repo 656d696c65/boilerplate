@@ -1,5 +1,6 @@
 import { relations } from "drizzle-orm"
-import { userModel, userSessionModel } from "../models.index.js"
+import { userModel } from "../models/user.model.js"
+import { userSessionModel } from "../models/userSession.model.js"
 
 
 export const userSessionRelations = relations(userSessionModel, ({ one, many }) => ({

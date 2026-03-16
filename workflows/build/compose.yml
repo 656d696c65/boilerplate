@@ -22,12 +22,12 @@
 # ==============================================================================
 
 services:
-  # API - Backend service (Hono framework on Node.js)
+  # API - Backend service
   boilerplate-api:
     image: boilerplate-api:${VERSION:-latest}
     build:
-      context: ../../application
-      dockerfile: ../workflows/build/api/Dockerfile
+      context: ../..
+      dockerfile: ./workflows/build/api/Dockerfile
       args:
         VERSION: ${VERSION:-latest}
     volumes:
@@ -41,7 +41,7 @@ services:
     image: boilerplate-website:${VERSION:-latest}
     build:
       context: ../..
-      dockerfile: workflows/build/website/Dockerfile
+      dockerfile: ./workflows/build/website/Dockerfile
       args:
         VERSION: ${VERSION:-latest}
         VITE_API_BASE_URL: ${VITE_API_BASE_URL:?VITE_API_BASE_URL must be set}

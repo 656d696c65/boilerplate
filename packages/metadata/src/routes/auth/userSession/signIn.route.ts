@@ -1,13 +1,12 @@
 import * as v from "valibot"
 import { varcharSchema } from "../../../components/schemas/varcharSchema.js"
-import { userSchema } from "../../../schemas.index.js"
-import { routeDefinition } from "../../../utilities.index.js"
-import { prefix } from "../../../utilities/prefix.js"
+import { userSchema } from "../../../schemas/index.js"
+import { routeDefinition } from "../../../utilities/index.js"
 
 
 export const signInRouteDefinition = routeDefinition({
     methods: ["POST"],
-    path: `${prefix.auth}/sign-in`,
+    path: `/auth/sign-in`,
     schemas: {
         input: v.object({
             email: v.message(

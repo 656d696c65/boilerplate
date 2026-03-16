@@ -1,94 +1,81 @@
-import { cloneElement, type ReactElement, type SVGProps } from "react"
-import { css, cx, type Styles } from "../../../styled-system/css"
-import { CircularLoader } from "../layouts/circularLoader"
+import { sva } from "../../../styled-system/css/sva"
+import { type ButtonContentProps, renderButtonContent } from "./buttonContent"
 
+const plainRecipe = sva({
+    slots: ["container", "leftIcon", "text", "rightIcon"],
+    base: {
+        container: {
+            width: "fit-content",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: "0.5rem",
+            padding: "0.5rem",
+            borderRadius: "md",
+            boxSizing: "border-box",
+            cursor: "pointer",
+            transition: "all",
+            transitionDuration: "200ms",
+            transitionTimingFunction: "ease-in-out",
+            border: "1px solid",
+            borderColor: "rgba(31, 35, 40, 0.15)",
+            backgroundColor: "primary",
+            color: "white",
+            stroke: "white",
+            boxShadow: "inset 0 1px 0 rgba(255,255,255,0.25)",
+            _hover: { backgroundColor: "primary/90" },
+            _active: { backgroundColor: "primary/90" },
+            _disabled: {
+                opacity: 0.5,
+                cursor: "not-allowed",
+                backgroundColor: "primary",
+            },
+        },
+        leftIcon: {
+            minWidth: "1rem",
+            width: "1rem",
+            minHeight: "1rem",
+            height: "1rem",
+            flexShrink: 0,
+            stroke: "white",
+        },
+        text: {
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            whiteSpace: "nowrap",
+            fontSize: "0.875rem",
+            lineHeight: "1rem",
+            fontWeight: "400",
+            color: "white",
+        },
+        rightIcon: {
+            minWidth: "1rem",
+            width: "1rem",
+            minHeight: "1rem",
+            height: "1rem",
+            stroke: "white/50",
+        },
+    },
+    variants: {
+        color: {
+            neutral: {},
+            danger: {
+                container: {
+                    backgroundColor: "error",
+                    borderColor: "rgba(31, 35, 40, 0.15)",
+                    _hover: { backgroundColor: "#c2341f" },
+                    _active: { backgroundColor: "#a22015" },
+                },
+            },
+            success: {},
+        },
+    },
+    defaultVariants: {
+        color: "neutral",
+    },
+})
 
-
-export function ButtonPlainContent(props: {
-    isLoading?: boolean
-    isDisabled?: boolean
-    leftIcon?: ReactElement<SVGProps<SVGSVGElement>>
-    text?: string
-    className?: Styles
-}) {
-
-    return (
-        <div
-            className={cx(
-                "group",
-                css(
-                    {
-                        cursor: "pointer",
-                        width: "fit-content",
-                        height: "auto",
-                        display: "flex",
-                        justifyContent: "start",
-                        alignItems: "center",
-                        borderRadius: "0.25rem",
-                        // backgroundColor: "neutral",
-                        borderWidth: "1px",
-                        borderColor: "neutral/25",
-                        padding: "0.5rem",
-                        gap: "0.5rem",
-                        backgroundColor: "neutral/90",
-                        _hover: {
-                            backgroundColor: "neutral",
-                        },
-                    },
-                    props.className,
-                )
-            )}
-        >
-            {
-                (props.isLoading === true)
-                    ? (
-                        <CircularLoader
-                            className={css.raw({
-                                stroke: "white",
-                            })}
-                        />
-                    )
-                    : (props.leftIcon === undefined)
-                        ? (null)
-                        : (
-                            cloneElement(props.leftIcon, {
-                                className: css(
-                                    {
-                                        strokeWidth: "1.5px",
-                                        minWidth: "1rem",
-                                        width: "1rem",
-                                        maxWidth: "1rem",
-                                        minHeight: "1rem",
-                                        height: "1rem",
-                                        maxHeight: "1rem",
-                                        stroke: "white",
-                                    },
-                                ),
-                            })
-                        )
-            }
-            {
-                (props.text === undefined)
-                    ? (null)
-                    : (
-                        <span
-                            className={css(
-                                {
-                                    fontSize: "1rem",
-                                    fontWeight: "300",
-                                    lineHeight: "1rem",
-                                    whiteSpace: "nowrap",
-                                    color: "white",
-                                    _groupHover: {
-                                        // textDecoration: "underline"
-                                    }
-                                },
-                            )}
-                        >
-                            {props.text}
-                        </span>
-                    )
-            }
-        </div>
-    )
+export function ButtonPlainContent(props: ButtonContentProps) {
+    const classes = plainRecipe({ color: props.color ?? "neutral" })
+    return renderButtonContent(props, classes)
 }

@@ -1,10 +1,3 @@
-
-export function setCookie(key: string, value?: string) {
-    document.cookie = [
-        `${key}=${value ?? ""}`,
-        "path=/",
-        // "max-age=86400",
-        // "SameSite=Lax",
-        // "Secure"
-    ].join("; ")
+export function setCookie(name: string, value: string) {
+    document.cookie = `${name}=${value}; path=/; SameSite=Lax`
 }

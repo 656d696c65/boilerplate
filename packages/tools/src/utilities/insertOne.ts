@@ -1,12 +1,12 @@
-import { dbClient } from "#/dbClient.js"
-import { TableConfig } from "drizzle-orm"
-import { PgInsertValue, PgTable } from "drizzle-orm/pg-core"
+import { type TableConfig } from "drizzle-orm"
+import { type PgInsertValue, PgTable } from "drizzle-orm/pg-core"
+import type { dbClient } from "./dbClient.js"
 
 
 export async function insertOne<
     T extends PgTable<TableConfig>
 >(parameters: {
-    database: typeof dbClient | Parameters<Parameters<typeof dbClient["transaction"]>[0]>[0]
+    database: ReturnType<typeof dbClient> | Parameters<Parameters<ReturnType<typeof dbClient>["transaction"]>[0]>[0]
     table: T
     data: PgInsertValue<T>
 }): Promise<T["$inferSelect"]> {

@@ -1,6 +1,6 @@
-import * as schemas from "@boilerplate/metadata/orm"
+import { modelSchemas } from "@boilerplate/metadata/orm"
 
 
 module.exports = {
-    ...schemas
+    ...modelSchemas
 }

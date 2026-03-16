@@ -1,4 +1,4 @@
-import { userModel } from "@boilerplate/metadata/orm"
+import { models } from "@boilerplate/metadata/orm"
 import { readUserRouteDefinition } from "@boilerplate/metadata/routes"
 import { eq } from "drizzle-orm"
 import { checkUserSessionMiddleware } from "../../../middlewares/checkUserSession.middleware.js"
@@ -17,7 +17,7 @@ export const readUserRoute = routeHandler({
 
         const readUser = await selectOne({
             database: Clients.platformPostgresql,
-            table: userModel,
+            table: models.user,
             where: (table) => eq(table.id, userSession.idUser)
         })
 

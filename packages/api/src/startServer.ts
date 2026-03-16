@@ -14,7 +14,7 @@ export async function startServer() {
             await Clients.init()
 
 
-            // Setup the server and connect to Hono app
+            // Setup the server and connect to app
             const server = createServer((request, response) => requestListener(request, response))
 
 

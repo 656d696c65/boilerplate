@@ -1,4 +1,4 @@
-import { userModel } from "@boilerplate/metadata/orm"
+import { models } from "@boilerplate/metadata/orm"
 import { updateUserRouteDefinition } from "@boilerplate/metadata/routes"
 import { and, eq } from "drizzle-orm"
 import { checkUserSessionMiddleware } from "../../../middlewares/checkUserSession.middleware.js"
@@ -22,7 +22,7 @@ export const updateUserRoute = routeHandler({
 
         await update({
             database: Clients.platformPostgresql,
-            table: userModel,
+            table: models.user,
             data: {
                 lastUpdatedAt: new Date().toISOString(),
             },

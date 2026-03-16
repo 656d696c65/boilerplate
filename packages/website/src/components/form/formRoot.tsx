@@ -1,23 +1,21 @@
 import { valibotResolver } from "@hookform/resolvers/valibot"
-import type { ReactElement } from "react"
+import { type ReactElement, useEffect, useRef } from "react"
 import { type DefaultValues, FormProvider, type UseFormReturn, useForm } from "react-hook-form"
-import * as v from "valibot"
-import { css } from "../../../styled-system/css"
-import { ButtonOutlineContent } from "../button/buttonOutlineContent"
+import type * as v from "valibot"
+import { css } from "../../../styled-system/css/css"
+import { Button } from "../button/button"
+import type { ButtonContentProps } from "../button/buttonContent"
 import { ButtonPlainContent } from "../button/buttonPlainContent"
 
-
-export function FormRoot<
-    T extends Record<string, unknown>,
-    U extends v.GenericSchema<T>
->(props: {
+export function FormRoot<T extends Record<string, unknown>, U extends v.GenericSchema<T>>(props: {
     schema: U
     defaultValues: DefaultValues<v.InferOutput<U>>
     onSubmit: (data: v.InferOutput<U>) => Promise<boolean>
     onCancel: ((data: v.InferOutput<U>) => void) | (() => Promise<void>) | undefined
     onSuccess: ((data: v.InferOutput<U>) => void) | (() => Promise<void>) | undefined
     resetOnSubmit?: boolean
-    submitButtonProps: Parameters<typeof ButtonOutlineContent>[0]
+    submitOnPressEnterKey?: boolean
+    submitButtonProps: ButtonContentProps
     children: (form: UseFormReturn<v.InferOutput<U>, any, v.InferOutput<U>>) => ReactElement
 }) {
     const form = useForm<T>({
@@ -27,6 +25,23 @@ export function FormRoot<
         defaultValues: props.defaultValues,
         resolver: valibotResolver<T, any, T>(props.schema),
     })
+    const submitButtonRef = useRef<HTMLButtonElement>(null)
+    const isSubmittingRef = useRef(false)
+
+    useEffect(() => {
+        if (props.submitOnPressEnterKey === false) return
+
+        const listener = async (event: KeyboardEvent) => {
+            if (event.code === "Enter" || event.code === "NumpadEnter") {
+                event.preventDefault()
+                submitButtonRef.current?.click()
+            }
+        }
+        document.addEventListener("keydown", listener)
+        return () => {
+            document.removeEventListener("keydown", listener)
+        }
+    }, [props.submitOnPressEnterKey])
 
     return (
         <FormProvider {...form}>
@@ -35,19 +50,19 @@ export function FormRoot<
                     width: "100%",
                     display: "flex",
                     flexDirection: "column",
-                    justifyContent: "start",
-                    alignItems: "center",
+                    justifyContent: "flex-start",
+                    alignItems: "flex-start",
                 })}
-            //  onSubmit={}
             >
                 <div
                     className={css({
                         width: "100%",
+                        maxWidth: "md",
                         display: "flex",
                         flexDirection: "column",
-                        justifyContent: "start",
-                        alignItems: "start",
-                        gap: "1rem",
+                        justifyContent: "flex-start",
+                        alignItems: "stretch",
+                        gap: "1.5rem",
                     })}
                 >
                     <div
@@ -55,47 +70,55 @@ export function FormRoot<
                             width: "100%",
                             display: "flex",
                             flexDirection: "column",
-                            justifyContent: "start",
-                            alignItems: "start",
-                            gap: "0.5rem",
+                            justifyContent: "flex-start",
+                            alignItems: "stretch",
+                            gap: "1rem",
                         })}
                     >
                         {props.children(form)}
                     </div>
-                    <button
+                    <Button
+                        ref={submitButtonRef}
+                        className={props.submitButtonProps.className}
                         type="button"
-                        // tabIndex={}
+                        hasLoader={true}
+                        isDisabled={props.submitButtonProps.isDisabled}
+                        title={props.submitButtonProps.title ?? props.submitButtonProps.text}
                         onClick={async (event) => {
-                            const triggerResponse = await form.trigger()
-                            if (!triggerResponse) return
-
-                            const data = form.getValues()
-                            const response = await props.onSubmit(data)
-                            if (!response) return
-
-                            if (props.resetOnSubmit === true) {
-                                form.reset()
-                            }
-
-                            if (props.onSuccess !== undefined) {
-                                await props.onSuccess(data)
-                            }
-
                             event.preventDefault()
+
+                            if (isSubmittingRef.current) return
+                            isSubmittingRef.current = true
+
+                            try {
+                                const triggerResponse = await form.trigger()
+                                if (!triggerResponse) return
+
+                                const data = form.getValues()
+                                const response = await props.onSubmit(data)
+                                if (!response) return
+
+                                if (props.resetOnSubmit === true) {
+                                    form.reset()
+                                }
+
+                                if (props.onSuccess !== undefined) {
+                                    await props.onSuccess(data)
+                                }
+                            } finally {
+                                isSubmittingRef.current = false
+                            }
                         }}
-                        className={css({
-                            width: "100%"
-                        })}
                     >
                         <ButtonPlainContent
-                            {...props.submitButtonProps}
-                            className={css.raw(
-                                {},
-                                props.submitButtonProps.className
-                            )}
-                            isLoading={form.formState.isSubmitting}
+                            text={props.submitButtonProps.text}
+                            color={props.submitButtonProps.color}
+                            leftIcon={props.submitButtonProps.leftIcon}
+                            rightIcon={props.submitButtonProps.rightIcon}
+                            isDisabled={props.submitButtonProps.isDisabled}
+                            className={props.submitButtonProps.className}
                         />
-                    </button>
+                    </Button>
                 </div>
             </form>
         </FormProvider>

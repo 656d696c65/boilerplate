@@ -1,4 +1,4 @@
-import { userSessionModel } from "@boilerplate/metadata/orm"
+import { models } from "@boilerplate/metadata/orm"
 import { signOutRouteDefinition } from "@boilerplate/metadata/routes"
 import { eq } from "drizzle-orm"
 import { routeHandler } from "../../../utilities/api/routeHandler.js"
@@ -22,7 +22,7 @@ export const signOutRoute = routeHandler({
 
         await update({
             database: Clients.platformPostgresql,
-            table: userSessionModel,
+            table: models.userSession,
             data: {
                 isActive: false,
                 lastUpdatedAt: new Date().toISOString(),

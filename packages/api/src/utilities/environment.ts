@@ -5,22 +5,16 @@ import { validate } from "./validate.js"
 export class Environment {
     static ENV: string
     static VERBOSE: string
-
     static PORT: string
-    static CORS_ORIGIN: string
 
+    static CORS_ORIGIN: string
     static COOKIES_DOMAIN: string
     static COOKIES_KEY: string
 
     static API_BASE_URL: string
     static WEBSITE_BASE_URL: string
 
-    static DATABASE_URL: string
-
-    static SMTP_HOST: string
-    static SMTP_PORT: string
-    static SMTP_USERNAME: string
-    static SMTP_PASSWORD: string
+    static SQL_DATABASE_URL: string
 
     static async init() {
         const parsedEnvironment = validate({
@@ -28,20 +22,15 @@ export class Environment {
                 ENV: v.picklist(["development", "production"]),
                 VERBOSE: v.picklist(["true", "false"]),
                 PORT: v.string(),
-                CORS_ORIGIN: v.string(),
 
+                CORS_ORIGIN: v.string(),
                 COOKIES_DOMAIN: v.string(),
                 COOKIES_KEY: v.string(),
 
                 API_BASE_URL: v.string(),
                 WEBSITE_BASE_URL: v.string(),
 
-                DATABASE_URL: v.string(),
-
-                SMTP_HOST: v.string(),
-                SMTP_PORT: v.string(),
-                SMTP_USERNAME: v.string(),
-                SMTP_PASSWORD: v.string(),
+                SQL_DATABASE_URL: v.string(),
             }),
             data: process.env,
         })

@@ -19,5 +19,5 @@ RUN npm install -g "pnpm@${PNPM_VERSION}"
 # Set working directory (application is bind-mounted here)
 WORKDIR /workspace
 
-# Start: install deps then run Vite dev server
-CMD ["sh", "-c", "pnpm install --no-frozen-lockfile && pnpm --filter='./packages/website' dev -- --host 0.0.0.0"]
+# Start: run Vite dev server (deps already installed by API container)
+CMD ["sh", "-c", "pnpm --filter='./packages/website' dev -- --host 0.0.0.0"]

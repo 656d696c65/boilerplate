@@ -1,13 +1,11 @@
-import { createRoute } from "@tanstack/react-router"
-import { rootLayoutRoute } from "../rootLayout.route.js"
-import { ErrorPage } from "../../features/root/errorPage.js"
-
+import { createRoute, lazyRouteComponent } from "@tanstack/react-router"
+import { rootLayoutRoute } from "../rootLayoutRoute.js"
 
 export const errorRoute = createRoute({
     getParentRoute: () => rootLayoutRoute,
-    path: '/error',
-    beforeLoad: async () => ({
+    path: "/error",
+    beforeLoad: () => ({
         title: "Error",
     }),
-    component: () => (<ErrorPage />)
+    component: lazyRouteComponent(() => import("../../features/error/errorPage.js"), "ErrorPage"),
 })

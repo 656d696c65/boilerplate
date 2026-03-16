@@ -1,4 +1,4 @@
-import { userModel, userSessionModel } from "@boilerplate/metadata/orm"
+import { models } from "@boilerplate/metadata/orm"
 import { signUpRouteDefinition } from "@boilerplate/metadata/routes"
 import { generateId } from "@boilerplate/metadata/utilities"
 import { pbkdf2Sync } from "crypto"
@@ -30,7 +30,7 @@ export const signUpRoute = routeHandler({
             const email = body.email.trim().toLowerCase()
             const createUser = await insertOne({
                 database: transaction,
-                table: userModel,
+                table: models.user,
                 data: {
                     id: generateId(),
                     isArchived: false,
@@ -47,7 +47,7 @@ export const signUpRoute = routeHandler({
             // Store the session
             const createUserSession = await insertOne({
                 database: transaction,
-                table: userSessionModel,
+                table: models.userSession,
                 data: {
                     id: generateId(),
                     idUser: createUser.id,

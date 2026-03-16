@@ -1,4 +1,4 @@
-import { userModel, userSessionModel } from "@boilerplate/metadata/orm"
+import { models } from "@boilerplate/metadata/orm"
 import { signInRouteDefinition } from "@boilerplate/metadata/routes"
 import { generateId } from "@boilerplate/metadata/utilities"
 import { pbkdf2Sync } from "crypto"
@@ -28,7 +28,7 @@ export const signInRoute = routeHandler({
         const email = body.email.trim().toLowerCase()
         const readUser = await selectOne({
             database: Clients.platformPostgresql,
-            table: userModel,
+            table: models.user,
             where: (table) => (
                 and(
                     eq(table.isArchived, false),
@@ -48,7 +48,7 @@ export const signInRoute = routeHandler({
         // Store the session
         const createUserSession = await insertOne({
             database: Clients.platformPostgresql,
-            table: userSessionModel,
+            table: models.userSession,
             data: {
                 id: generateId(),
                 idUser: readUser.id,

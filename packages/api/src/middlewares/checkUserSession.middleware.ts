@@ -1,4 +1,4 @@
-import { userSessionModel } from "@boilerplate/metadata/orm"
+import { models } from "@boilerplate/metadata/orm"
 import { eq } from "drizzle-orm"
 import type { BaseContext } from "../utilities/api/baseContext.js"
 import { Clients } from "../utilities/clients.js"
@@ -23,7 +23,7 @@ export async function checkUserSessionMiddleware(parameters: {
 
         const readUserSession = await selectOne({
             database: Clients.platformPostgresql,
-            table: userSessionModel,
+            table: models.userSession,
             where: (table) => eq(table.token, userSessionToken)
         })
 

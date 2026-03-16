@@ -1,9 +1,9 @@
 import type { routeDefinition } from "@boilerplate/metadata/utilities"
 import { Fragment, useMemo, type ComponentProps, type ReactElement } from "react"
 import * as v from "valibot"
-import { css } from "../../../styled-system/css"
-import { useAPIData } from "../../utilities/useAPIData"
-import { CircularLoader } from "../layouts/circularLoader"
+import { css, cx } from "../../../styled-system/css"
+import { useDataFromAPI } from "../../utilities/useDataFromAPI"
+import { CircularLoader } from "../circularLoader"
 import { FormatError } from "./formatError"
 
 
@@ -22,7 +22,7 @@ export function DataWrapper<
     loaderProps?: ComponentProps<typeof CircularLoader>
     errorProps?: ComponentProps<typeof FormatError>
 }) {
-    const response = useAPIData({
+    const response = useDataFromAPI({
         routeDefinition: props.routeDefinition,
         body: props.body,
     })
@@ -34,8 +34,8 @@ export function DataWrapper<
                 <CircularLoader
                     {...props.loaderProps}
                     text={props.loaderProps?.text}
-                    className={css.raw(
-                        {},
+                    className={cx(
+                        css({}),
                         props.loaderProps?.className,
                     )}
                 />

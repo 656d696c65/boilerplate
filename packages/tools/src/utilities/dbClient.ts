@@ -6,7 +6,7 @@ import { env } from './env.js'
 
 export function dbClient() {
     try {
-        const queryClient = postgres(env()?.DATABASE_URL ?? "")
+        const queryClient = postgres(env()?.SQL_DATABASE_URL ?? "")
         const drizzleClient = drizzle(
             queryClient,
             {

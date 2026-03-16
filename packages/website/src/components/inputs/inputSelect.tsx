@@ -172,7 +172,7 @@ export function InputSelect<TValue extends string>(props:
                                                 <ButtonGhostContent
                                                     key={option.key}
                                                     text={option.label}
-                                                    className={css.raw({
+                                                    className={css({
                                                         width: "100%",
                                                     })}
                                                 />

@@ -20,4 +20,4 @@ RUN npm install -g "pnpm@${PNPM_VERSION}"
 WORKDIR /workspace
 
 # Start via entrypoint script (bind-mounted at runtime via /dev-scripts)
-ENTRYPOINT ["/bin/bash", "/dev-scripts/packages/api/entrypoint.sh"]
+ENTRYPOINT ["/bin/bash", "/dev-scripts/api/entrypoint.sh"]

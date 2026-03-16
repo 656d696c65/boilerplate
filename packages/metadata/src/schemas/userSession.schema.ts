@@ -3,7 +3,7 @@ import { booleanSchema } from '../components/schemas/booleanSchema.js'
 import { idSchema } from '../components/schemas/idSchema.js'
 import { stringSchema } from '../components/schemas/stringSchema.js'
 import { timestampSchema } from '../components/schemas/timestampSchema.js'
-import type { userSessionModel } from '../orm.index.js'
+import { userSessionModel } from '../orm/models/userSession.model.js'
 
 
 export const userSessionSchema = v.object({

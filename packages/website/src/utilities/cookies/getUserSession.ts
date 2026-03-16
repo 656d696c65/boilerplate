@@ -1,19 +1,16 @@
 import { readUserSessionRouteDefinition } from "@boilerplate/metadata/routes"
-import { fetchAPIResponse } from "../fetchAPIResponse.js"
-import { getAuthenticated } from "./getAuthenticated.js"
-
+import { getResponseBodyFromAPI } from "../getResponseBodyFromAPI.js"
+import { getIsAuthenticated } from "./getIsAuthenticated.js"
 
 export async function getUserSession() {
-    const isAuthenticated = getAuthenticated()
+    const isAuthenticated = getIsAuthenticated()
 
     if (isAuthenticated === true) {
-        const response = await fetchAPIResponse({
+        const response = await getResponseBodyFromAPI({
             routeDefinition: readUserSessionRouteDefinition,
             body: {},
         })
-        if (response.success === false) {
-            return undefined
-        }
+        if (!response.ok) return undefined
         return response.data
     }
     return undefined

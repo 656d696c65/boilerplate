@@ -1,12 +1,11 @@
 import * as v from "valibot"
-import { userSchema, userSessionSchema } from "../../../schemas.index.js"
-import { routeDefinition } from "../../../utilities.index.js"
-import { prefix } from "../../../utilities/prefix.js"
+import { userSchema, userSessionSchema } from "../../../schemas/index.js"
+import { routeDefinition } from "../../../utilities/index.js"
 
 
 export const readUserSessionRouteDefinition = routeDefinition({
     methods: ["POST"],
-    path: `${prefix.auth}/read-user-session`,
+    path: `/auth/read-user-session`,
     schemas: {
         input: v.object({}),
         output: v.object({
