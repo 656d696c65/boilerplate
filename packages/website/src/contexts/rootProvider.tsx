@@ -1,7 +1,7 @@
+import { ToasterProvider } from '@boilerplate/ui'
 import { Fragment } from 'react'
 import { DataProvider } from './data/dataProvider.js'
 import { RouterProvider } from './router/routerProvider.js'
-import { ToasterProvider } from './toasts/toastProvider.js'
 
 
 export function RootProvider() {

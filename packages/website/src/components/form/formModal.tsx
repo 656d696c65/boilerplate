@@ -1,4 +1,5 @@
 import { generateId } from "@boilerplate/metadata/utilities"
+import { ButtonGhostContent, ButtonOutlineContent, ButtonPlainContent } from "@boilerplate/ui"
 import { valibotResolver } from "@hookform/resolvers/valibot"
 import { IconX } from "@tabler/icons-react"
 import { cloneElement, Fragment, useEffect, useState, type ButtonHTMLAttributes, type ReactElement } from "react"
@@ -6,9 +7,6 @@ import { createPortal } from "react-dom"
 import { FormProvider, useForm, type DefaultValues, type UseFormReturn } from "react-hook-form"
 import * as v from "valibot"
 import { css } from "../../../styled-system/css"
-import { ButtonGhostContent } from "../button/buttonGhostContent"
-import { ButtonOutlineContent } from "../button/buttonOutlineContent"
-import { ButtonPlainContent } from "../button/buttonPlainContent"
 
 
 export function FormModal<

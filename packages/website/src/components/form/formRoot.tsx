@@ -1,11 +1,9 @@
+import { Button, type ButtonContentProps, ButtonPlainContent } from "@boilerplate/ui"
 import { valibotResolver } from "@hookform/resolvers/valibot"
 import { type ReactElement, useEffect, useRef } from "react"
 import { type DefaultValues, FormProvider, type UseFormReturn, useForm } from "react-hook-form"
 import type * as v from "valibot"
 import { css } from "../../../styled-system/css/css"
-import { Button } from "../button/button"
-import type { ButtonContentProps } from "../button/buttonContent"
-import { ButtonPlainContent } from "../button/buttonPlainContent"
 
 export function FormRoot<T extends Record<string, unknown>, U extends v.GenericSchema<T>>(props: {
     schema: U
