@@ -1,8 +1,8 @@
+import { ButtonGhostContent } from "@boilerplate/ui";
 import { IconX } from "@tabler/icons-react";
 import { useEffect } from "react";
 import { createPortal } from "react-dom";
 import { css } from "../../../styled-system/css";
-import { ButtonGhostContent } from "../button/buttonGhostContent";
 
 
 export function Modal(props: {

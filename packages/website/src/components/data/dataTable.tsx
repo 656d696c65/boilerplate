@@ -1,4 +1,5 @@
 
+import { ButtonGhostContent, ButtonOutlineContent, InputDebounced, InputText, Popover } from "@boilerplate/ui"
 import { IconSortAscending, IconSortDescending, IconTableColumn } from "@tabler/icons-react"
 import {
     flexRender,
@@ -13,12 +14,7 @@ import {
 } from '@tanstack/react-table'
 import { useMemo, useState, type ReactElement } from "react"
 import { css } from "../../../styled-system/css"
-import { ButtonGhostContent } from "../button/buttonGhostContent"
-import { ButtonOutlineContent } from "../button/buttonOutlineContent"
 import { CircularLoader } from "../circularLoader"
-import { InputDebounced } from "../inputs/inputDebounced"
-import { InputText } from "../inputs/inputText"
-import { Popover } from "../layouts/popover"
 import { Section } from "../layouts/section/section"
 import { FormatNull } from "./formatNull"
 
