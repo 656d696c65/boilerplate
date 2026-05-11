@@ -23,6 +23,9 @@ function styledSystemMjsResolve(): Plugin {
 // https://vite.development/config/
 export default defineConfig({
     plugins: [react(), styledSystemMjsResolve()],
+    resolve: {
+        conditions: ['source'],
+    },
     assetsInclude: ['**/*.md', "**/*.woff2"],
     server: {
         host: true,

@@ -8,4 +8,4 @@ set -e
 
 echo "Starting API dev server..."
 cd /workspace/packages/api
-exec npx tsx watch ./src/index.ts
+exec npx tsx watch --conditions source ./src/index.ts

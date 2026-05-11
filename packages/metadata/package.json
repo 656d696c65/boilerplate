@@ -18,16 +18,20 @@
     },
     "exports": {
         "./orm": {
-            "default": "./src/orm/index.ts"
+            "source": "./src/orm/index.ts",
+            "default": "./build/orm/index.js"
         },
         "./routes": {
-            "default": "./src/routes/index.ts"
+            "source": "./src/routes/index.ts",
+            "default": "./build/routes/index.js"
         },
         "./schemas": {
-            "default": "./src/schemas/index.ts"
+            "source": "./src/schemas/index.ts",
+            "default": "./build/schemas/index.js"
         },
         "./utilities": {
-            "default": "./src/utilities/index.ts"
+            "source": "./src/utilities/index.ts",
+            "default": "./build/utilities/index.js"
         }
     }
 }
