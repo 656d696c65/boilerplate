@@ -4,7 +4,7 @@ dev cmd:
     @just dev-{{cmd}}
 
 dev-up:
-    ./scripts/dev-up.sh
+    ./.workflows/dev/up.sh
 
 dev-down:
     ./scripts/dev-down.sh

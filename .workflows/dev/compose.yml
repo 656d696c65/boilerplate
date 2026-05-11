@@ -22,7 +22,7 @@ services:
       POSTGRES_PASSWORD: *pg-password
       POSTGRES_DB: *pg-db
     ports:
-      - "${DEV_POSTGRES_PORT:-19000}:5432"  # Host access for DB clients (DBeaver, pgAdmin, etc.)
+      - "127.0.0.1:${POSTGRES_HOST_PORT}:5432"  # Host access for DB clients (DBeaver, pgAdmin, etc.)
     volumes:
       - postgres_data:/var/lib/postgresql
     healthcheck:
@@ -51,18 +51,18 @@ services:
       VERBOSE: "true"
       PORT: "3000"
       # Auth
-      CORS_ORIGIN: ${DEV_WEBSITE_URL:-http://localhost:19003}
+      CORS_ORIGIN: "http://localhost:${WEBSITE_HOST_PORT}"
       COOKIES_DOMAIN: localhost
       COOKIES_KEY: boilerplate-dev-secret-key-change-in-production
       # URLs
-      API_BASE_URL: http://api:3000
-      WEBSITE_BASE_URL: ${DEV_WEBSITE_URL:-http://localhost:19003}
+      API_BASE_URL: "http://localhost:${API_HOST_PORT}"
+      WEBSITE_BASE_URL: "http://localhost:${WEBSITE_HOST_PORT}"
       # Database
       SQL_DATABASE_URL: *pg-url
       # Tools (used by migrate/seed scripts)
       NODE_ENV: development
     ports:
-      - "${DEV_API_PORT:-19002}:3000"
+      - "127.0.0.1:${API_HOST_PORT}:3000"
     volumes:
       # Full application package - bind-mounted from host (including node_modules)
       - ../..:/workspace:cached
@@ -84,10 +84,10 @@ services:
         NODE_VERSION: "22.16.0"
         PNPM_VERSION: "10.12.1"
     environment:
-      VITE_API_BASE_URL: ${DEV_API_URL:-http://localhost:19002}
-      VITE_WEBSITE_BASE_URL: ${DEV_WEBSITE_URL:-http://localhost:19003}
+      VITE_API_BASE_URL: "http://localhost:${API_HOST_PORT}"
+      VITE_WEBSITE_BASE_URL: "http://localhost:${WEBSITE_HOST_PORT}"
     ports:
-      - "${DEV_WEBSITE_PORT:-19003}:5174"
+      - "127.0.0.1:${WEBSITE_HOST_PORT}:5174"
     volumes:
       # Full application package - bind-mounted from host (including node_modules)
       - ../..:/workspace:cached
