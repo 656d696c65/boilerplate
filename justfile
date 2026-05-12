@@ -9,7 +9,7 @@ dev-up:
     ./.workflows/dev/up.sh
 
 dev-down:
-    ./scripts/dev-down.sh
+    ./.scripts/dev-down.sh
 
 # ==============================================================================
 # Build Pipeline
@@ -61,6 +61,6 @@ build-start:
     @echo "  Press Ctrl+C to stop"
     @echo "=============================================="
     @echo ""
-    -./scripts/dev-down.sh 2>/dev/null || true
+    -./.scripts/dev-down.sh 2>/dev/null || true
     -VERSION=$(cat VERSION) {{COMPOSE_BUILD}} down --remove-orphans 2>/dev/null || true
     VERSION=$(cat VERSION) {{COMPOSE_BUILD}} up --force-recreate --remove-orphans
